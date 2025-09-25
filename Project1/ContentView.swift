@@ -168,7 +168,7 @@ struct ReservationView: View {
                         Divider().background(Color.white.opacity(0.25))
 
                         HStack(spacing: 12) {
-                            Label("Kid chair needed", systemImage: "chair.lounge.fill")
+                            Label("Kids chair needed", systemImage: "chair.lounge.fill")
                                 .font(.subheadline.weight(.semibold))
                                 .foregroundStyle(.primary)
                             Spacer()
