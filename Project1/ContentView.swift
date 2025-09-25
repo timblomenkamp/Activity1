@@ -84,7 +84,7 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity)
                             .background(Color.gray.opacity(0.3))
                             .cornerRadius(12)
-                            .padding(.horizontal, 30)
+                            .padding(.horizontal, 40)
                     }
                     .padding(.top, 5)
                     
@@ -99,7 +99,7 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity)
                             .background(Color.gray.opacity(0.3))
                             .cornerRadius(12)
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 40)
                     }
                     .padding(.top, 5)
                 }
