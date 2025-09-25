@@ -116,7 +116,7 @@ struct ContentView: View {
 
 struct ReservationView: View {
     // MARK: - State
-    @State private var guests: String = "2"      // numerisches Feld
+    @State private var guests: Int = 2
     @State private var needsKidChair = false
     @State private var date = Date()
     @State private var phone = ""
@@ -124,7 +124,7 @@ struct ReservationView: View {
     @State private var comment = ""
 
     private var isFormValid: Bool {
-        (Int(guests) ?? 0) > 0 && !phone.isEmpty && !email.isEmpty
+        guests > 0 && !phone.isEmpty && !email.isEmpty
     }
 
     var body: some View {
@@ -156,13 +156,33 @@ struct ReservationView: View {
                                 .font(.subheadline.weight(.semibold))
                                 .foregroundStyle(.primary)
                             Spacer()
-                            TextField("2", text: $guests)
-                                .keyboardType(.numberPad)
-                                .multilineTextAlignment(.trailing)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .background(Color.white.opacity(0.9), in: Capsule())
-                                .frame(minWidth: 60)
+                            HStack(spacing: 0) {
+                                Button {
+                                    if guests > 1 { guests -= 1 }
+                                } label: {
+                                    Image(systemName: "minus")
+                                        .font(.subheadline.weight(.semibold))
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal, 12)
+                                }
+                                .disabled(guests <= 1)
+
+                                Text("\(guests)")
+                                    .font(.subheadline.weight(.semibold))
+                                    .frame(minWidth: 28)
+                                    .padding(.horizontal, 4)
+
+                                Button {
+                                    guests += 1
+                                } label: {
+                                    Image(systemName: "plus")
+                                        .font(.subheadline.weight(.semibold))
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal, 12)
+                                }
+                            }
+                            .buttonStyle(.plain)
+                            .background(Color.white.opacity(0.9), in: Capsule())
                         }
 
                         Divider().background(Color.white.opacity(0.25))
