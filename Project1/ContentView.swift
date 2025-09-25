@@ -3,7 +3,7 @@
 //  Project1
 //
 //  Created by Benjamin Poerschke on 21.09.2025.
-//
+
 
 import SwiftUI
 
@@ -13,7 +13,7 @@ struct ContentView: View {
             ZStack {
                 // Grey-white background
                 LinearGradient(
-                    colors: [
+                    colors: [ //gradient
                         Color(red: 30/255, green: 30/255, blue: 30/255),
                         Color(red: 80/255, green: 80/255, blue: 80/255)
                     ],
