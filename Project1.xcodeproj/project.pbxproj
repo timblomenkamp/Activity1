@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		A54013AE2E803E8E00FA1571 /* Project1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project1.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A54013AE2E803E8E00FA1571 /* Activity1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Activity1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 		A54013AF2E803E8E00FA1571 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A54013AE2E803E8E00FA1571 /* Project1.app */,
+				A54013AE2E803E8E00FA1571 /* Activity1.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A54013AD2E803E8E00FA1571 /* Project1 */ = {
+		A54013AD2E803E8E00FA1571 /* Activity1 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A54013B92E803E9000FA1571 /* Build configuration list for PBXNativeTarget "Project1" */;
+			buildConfigurationList = A54013B92E803E9000FA1571 /* Build configuration list for PBXNativeTarget "Activity1" */;
 			buildPhases = (
 				A54013AA2E803E8E00FA1571 /* Sources */,
 				A54013AB2E803E8E00FA1571 /* Frameworks */,
@@ -63,11 +63,11 @@
 			fileSystemSynchronizedGroups = (
 				A54013B02E803E8E00FA1571 /* Project1 */,
 			);
-			name = Project1;
+			name = Activity1;
 			packageProductDependencies = (
 			);
 			productName = Project1;
-			productReference = A54013AE2E803E8E00FA1571 /* Project1.app */;
+			productReference = A54013AE2E803E8E00FA1571 /* Activity1.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A54013AD2E803E8E00FA1571 /* Project1 */,
+				A54013AD2E803E8E00FA1571 /* Activity1 */,
 			);
 		};
 /* End PBXProject section */
@@ -322,7 +322,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A54013B92E803E9000FA1571 /* Build configuration list for PBXNativeTarget "Project1" */ = {
+		A54013B92E803E9000FA1571 /* Build configuration list for PBXNativeTarget "Activity1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A54013BA2E803E9000FA1571 /* Debug */,
