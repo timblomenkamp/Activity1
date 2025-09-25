@@ -116,11 +116,12 @@ struct ContentView: View {
 
 struct ReservationView: View {
     // MARK: - State
-    @State private var guests: Int = 2
+    @State private var guests: Int = 1
     @State private var needsKidChair = false
     @State private var date = Date()
     @State private var phone = ""
     @State private var email = ""
+    @State private var selectedCountry = CountryData.default
     @State private var comment = ""
 
     private var isFormValid: Bool {
@@ -241,11 +242,39 @@ struct ReservationView: View {
                             .font(.subheadline.weight(.semibold))
                             .foregroundColor(.white.opacity(0.9))
                         VStack(spacing: 12) {
-                            TextField("Phone number", text: $phone)
-                                .textContentType(.telephoneNumber)
-                                .keyboardType(.phonePad)
-                                .padding(12)
-                                .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
+                            HStack(spacing: 8) {
+                                Menu {
+                                    ForEach(CountryData.all.sorted(by: { $0.name < $1.name })) { c in
+                                        Button(action: { selectedCountry = c }) {
+                                            Text("\(c.flag)  \(c.name)  \(c.dialCode)")
+                                        }
+                                    }
+                                } label: {
+                                    HStack(spacing: 6) {
+                                        Text(selectedCountry.flag)
+                                        Text(selectedCountry.dialCode)
+                                            .fontWeight(.semibold)
+                                        Image(systemName: "chevron.down")
+                                            .font(.footnote)
+                                            .opacity(0.6)
+                                    }
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 10)
+                                    .background(Color.white, in: Capsule())
+                                }
+
+                                Divider()
+                                    .frame(height: 22)
+                                    .opacity(0.2)
+
+                                TextField("Phone number", text: $phone)
+                                    .keyboardType(.numberPad)
+                                    .onChange(of: phone) { newVal in
+                                        phone = newVal.filter { $0.isNumber }
+                                    }
+                            }
+                            .padding(12)
+                            .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
 
                             TextField("E-mail", text: $email)
                                 .textContentType(.emailAddress)
@@ -277,7 +306,7 @@ struct ReservationView: View {
                     // Send-Bar mit Button (weiß wie im Mock)
                     HStack {
                         Button {
-                            print("Send reservation: \(guests) guests | \(date) | \(phone) | \(email) | kidChair: \(needsKidChair) | note: \(comment)")
+                            print("Send reservation: \(guests) guests | \(date) | \(selectedCountry.dialCode) \(phone) | \(email) | kidChair: \(needsKidChair) | note: \(comment)")
                         } label: {
                             HStack(spacing: 8) {
                                 Image(systemName: "paperplane.fill")
@@ -343,4 +372,85 @@ struct LocationsView: View {
             .navigationTitle("Locations")
         }
     }
+}
+
+// MARK: - Country / Dial Code Data
+struct Country: Identifiable, Hashable {
+    let id = UUID()
+    let name: String
+    let iso2: String
+    let dialCode: String
+    var flag: String {
+        let base: UInt32 = 127397
+        var scalarView = String.UnicodeScalarView()
+        for v in iso2.uppercased().unicodeScalars {
+            if let s = UnicodeScalar(base + v.value) { scalarView.append(s) }
+        }
+        return String(scalarView)
+    }
+}
+
+enum CountryData {
+    static let all: [Country] = [
+        Country(name: "Argentina", iso2: "AR", dialCode: "+54"),
+        Country(name: "Australia", iso2: "AU", dialCode: "+61"),
+        Country(name: "Austria", iso2: "AT", dialCode: "+43"),
+        Country(name: "Belgium", iso2: "BE", dialCode: "+32"),
+        Country(name: "Brazil", iso2: "BR", dialCode: "+55"),
+        Country(name: "Bulgaria", iso2: "BG", dialCode: "+359"),
+        Country(name: "Canada", iso2: "CA", dialCode: "+1"),
+        Country(name: "Chile", iso2: "CL", dialCode: "+56"),
+        Country(name: "China", iso2: "CN", dialCode: "+86"),
+        Country(name: "Colombia", iso2: "CO", dialCode: "+57"),
+        Country(name: "Croatia", iso2: "HR", dialCode: "+385"),
+        Country(name: "Czech Republic", iso2: "CZ", dialCode: "+420"),
+        Country(name: "Denmark", iso2: "DK", dialCode: "+45"),
+        Country(name: "Egypt", iso2: "EG", dialCode: "+20"),
+        Country(name: "Estonia", iso2: "EE", dialCode: "+372"),
+        Country(name: "Finland", iso2: "FI", dialCode: "+358"),
+        Country(name: "France", iso2: "FR", dialCode: "+33"),
+        Country(name: "Germany", iso2: "DE", dialCode: "+49"),
+        Country(name: "Greece", iso2: "GR", dialCode: "+30"),
+        Country(name: "Hong Kong", iso2: "HK", dialCode: "+852"),
+        Country(name: "Hungary", iso2: "HU", dialCode: "+36"),
+        Country(name: "Iceland", iso2: "IS", dialCode: "+354"),
+        Country(name: "India", iso2: "IN", dialCode: "+91"),
+        Country(name: "Indonesia", iso2: "ID", dialCode: "+62"),
+        Country(name: "Ireland", iso2: "IE", dialCode: "+353"),
+        Country(name: "Israel", iso2: "IL", dialCode: "+972"),
+        Country(name: "Italy", iso2: "IT", dialCode: "+39"),
+        Country(name: "Japan", iso2: "JP", dialCode: "+81"),
+        Country(name: "Kenya", iso2: "KE", dialCode: "+254"),
+        Country(name: "Luxembourg", iso2: "LU", dialCode: "+352"),
+        Country(name: "Malaysia", iso2: "MY", dialCode: "+60"),
+        Country(name: "Mexico", iso2: "MX", dialCode: "+52"),
+        Country(name: "Netherlands", iso2: "NL", dialCode: "+31"),
+        Country(name: "New Zealand", iso2: "NZ", dialCode: "+64"),
+        Country(name: "Norway", iso2: "NO", dialCode: "+47"),
+        Country(name: "Pakistan", iso2: "PK", dialCode: "+92"),
+        Country(name: "Philippines", iso2: "PH", dialCode: "+63"),
+        Country(name: "Poland", iso2: "PL", dialCode: "+48"),
+        Country(name: "Portugal", iso2: "PT", dialCode: "+351"),
+        Country(name: "Qatar", iso2: "QA", dialCode: "+974"),
+        Country(name: "Romania", iso2: "RO", dialCode: "+40"),
+        Country(name: "Russia", iso2: "RU", dialCode: "+7"),
+        Country(name: "Saudi Arabia", iso2: "SA", dialCode: "+966"),
+        Country(name: "Singapore", iso2: "SG", dialCode: "+65"),
+        Country(name: "Slovakia", iso2: "SK", dialCode: "+421"),
+        Country(name: "Slovenia", iso2: "SI", dialCode: "+386"),
+        Country(name: "South Africa", iso2: "ZA", dialCode: "+27"),
+        Country(name: "South Korea", iso2: "KR", dialCode: "+82"),
+        Country(name: "Spain", iso2: "ES", dialCode: "+34"),
+        Country(name: "Sweden", iso2: "SE", dialCode: "+46"),
+        Country(name: "Switzerland", iso2: "CH", dialCode: "+41"),
+        Country(name: "Taiwan", iso2: "TW", dialCode: "+886"),
+        Country(name: "Thailand", iso2: "TH", dialCode: "+66"),
+        Country(name: "Turkey", iso2: "TR", dialCode: "+90"),
+        Country(name: "Ukraine", iso2: "UA", dialCode: "+380"),
+        Country(name: "United Arab Emirates", iso2: "AE", dialCode: "+971"),
+        Country(name: "United Kingdom", iso2: "GB", dialCode: "+44"),
+        Country(name: "United States", iso2: "US", dialCode: "+1"),
+        Country(name: "Vietnam", iso2: "VN", dialCode: "+84")
+    ]
+    static let `default`: Country = all.first(where: { $0.iso2 == "DE" }) ?? all[0]
 }
