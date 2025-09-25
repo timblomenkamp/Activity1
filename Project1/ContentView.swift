@@ -316,15 +316,17 @@ struct MenuView: View {
 // Location View
 struct LocationsView: View {
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Our Locations")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            Text("Here you will later see addresses, maps and opening hours.")
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
+        ScrollView {
+            VStack(spacing: 20) {
+                Text("Our Locations")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                Text("Here you will later see addresses, maps and opening hours.")
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+            }
+            .navigationTitle("Locations")
         }
-        .navigationTitle("Locations")
     }
 }
