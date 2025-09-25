@@ -129,12 +129,6 @@ struct ReservationView: View {
 
     var body: some View {
         ZStack {
-            // Ganz hinten: Hintergrundbild
-            Image("restaurantpic")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-                .blur(radius: 6, opaque: true)
 
             // Darüber: Abdunkelung
             LinearGradient(
