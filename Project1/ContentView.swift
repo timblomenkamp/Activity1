@@ -6,6 +6,7 @@
 
 
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
     var body: some View {
@@ -365,8 +366,25 @@ struct MenuView: View {
     }
 }
 
+// MARK: - Map Pin for LocationsView
+struct BCNPin: Identifiable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+}
+
 // Location View
 struct LocationsView: View {
+    private let pins = [
+        BCNPin(coordinate: CLLocationCoordinate2D(latitude: 41.387, longitude: 2.170)), // Plaça Catalunya
+        BCNPin(coordinate: CLLocationCoordinate2D(latitude: 41.403, longitude: 2.174)), // Sagrada Família
+        BCNPin(coordinate: CLLocationCoordinate2D(latitude: 41.380, longitude: 2.185))  // Barceloneta
+    ]
+    
+    @State private var mapRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 41.390, longitude: 2.176),
+        span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.03)
+    )
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -377,6 +395,13 @@ struct LocationsView: View {
                 Text("Here you will later see addresses, maps and opening hours.")
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
+                
+                Map(coordinateRegion: $mapRegion, annotationItems: pins) { pin in
+                    MapMarker(coordinate: pin.coordinate, tint: .red)
+                }
+                .frame(height: 240)
+                .cornerRadius(18)
+                .padding(.horizontal)
             }
             .navigationTitle("Locations")
         }
