@@ -350,19 +350,85 @@ struct ReservationView: View {
 // Menu View
 struct MenuView: View {
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                Text("Our Menu")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.top)
-                
-                Text("Here you will later see all categories of dishes, wines and desserts.")
-                    .multilineTextAlignment(.center)
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(red: 30/255, green: 30/255, blue: 30/255),
+                    Color(red: 80/255, green: 80/255, blue: 80/255)
+                ],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+            
+            ScrollView {
+                VStack(spacing: 28) {
+                    Text("Our Menu")
+                        .font(.largeTitle.bold())
+                        .padding(.top)
+                        .foregroundColor(.white)
+                    Text("Experience the finest Spanish specialties, reimagined for a modern palate.")
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.gray.opacity(0.8))
+                        .padding(.horizontal)
+
+                    VStack(spacing: 20) {
+                        menuCard(
+                            name: "Pulpo a la Gallega",
+                            description: "Galician-style octopus, tender and smoky, served with saffron potatoes, smoked paprika oil, and Maldon salt.",
+                            price: "€29"
+                        )
+                        menuCard(
+                            name: "Paella de Mariscos",
+                            description: "Classic seafood paella with Mediterranean prawns, calamari, mussels, and bomba rice infused with saffron.",
+                            price: "€34"
+                        )
+                        menuCard(
+                            name: "Cochinillo Asado",
+                            description: "Crispy slow-roasted suckling pig with apple purée and sherry reduction.",
+                            price: "€38"
+                        )
+                        menuCard(
+                            name: "Chuleta de Buey",
+                            description: "Aged rib steak, fire-grilled, served with pimientos de padrón and rosemary salt.",
+                            price: "€44"
+                        )
+                        menuCard(
+                            name: "Gazpacho Andaluz",
+                            description: "Chilled Andalusian tomato soup with green olive oil and sourdough crisps.",
+                            price: "€14"
+                        )
+                        menuCard(
+                            name: "Crema Catalana",
+                            description: "Traditional Catalan cream with caramelized sugar crust and Valencia orange zest.",
+                            price: "€12"
+                        )
+                    }
                     .padding(.horizontal)
+                    .padding(.bottom, 32)
+                }
             }
         }
-        .navigationTitle("Menu")
+    }
+
+    private func menuCard(name: String, description: String, price: String) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(name)
+                    .font(.title3.bold())
+                    .foregroundColor(.white)
+                Spacer()
+                Text(price)
+                    .font(.title3)
+                    .foregroundColor(.yellow)
+            }
+            Text(description)
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.82))
+        }
+        .padding()
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 18).stroke(.white.opacity(0.13), lineWidth: 1))
+        .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
     }
 }
 
@@ -386,24 +452,36 @@ struct LocationsView: View {
     )
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                Text("Our Locations")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                Text("Here you will later see addresses, maps and opening hours.")
-                    .multilineTextAlignment(.center)
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(red: 30/255, green: 30/255, blue: 30/255),
+                    Color(red: 80/255, green: 80/255, blue: 80/255)
+                ],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+
+            ScrollView {
+                VStack(spacing: 20) {
+                    Text("Our Locations")
+                        .font(.largeTitle.bold())
+                        .foregroundColor(.white)
+                    
+                    Text("Here you will later see addresses, maps and opening hours.")
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.gray.opacity(0.8))
+                        .padding(.horizontal)
+                    
+                    Map(coordinateRegion: $mapRegion, annotationItems: pins) { pin in
+                        MapMarker(coordinate: pin.coordinate, tint: .red)
+                    }
+                    .frame(height: 240)
+                    .cornerRadius(18)
                     .padding(.horizontal)
-                
-                Map(coordinateRegion: $mapRegion, annotationItems: pins) { pin in
-                    MapMarker(coordinate: pin.coordinate, tint: .red)
                 }
-                .frame(height: 240)
-                .cornerRadius(18)
-                .padding(.horizontal)
+                .navigationTitle("Locations")
             }
-            .navigationTitle("Locations")
         }
     }
 }
