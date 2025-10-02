@@ -123,6 +123,7 @@ struct ReservationView: View {
     @State private var email = ""
     @State private var selectedCountry = CountryData.default
     @State private var comment = ""
+    @State private var showSuccess = false
 
     private var isFormValid: Bool {
         guests > 0 && !phone.isEmpty && !email.isEmpty
@@ -138,6 +139,12 @@ struct ReservationView: View {
                 endPoint: .bottom
             )
             .ignoresSafeArea()
+
+            if showSuccess {
+                SuccessView()
+                    .transition(.opacity)
+                    .zIndex(1)
+            }
 
             // Ganz vorne: Inhalt
             ScrollView {
@@ -241,8 +248,8 @@ struct ReservationView: View {
                         Text("Contact")
                             .font(.subheadline.weight(.semibold))
                             .foregroundColor(.white.opacity(0.9))
-                        VStack(spacing: 12) {
-                            HStack(spacing: 8) {
+                        VStack(spacing: 8) {
+                            HStack(spacing: 6) {
                                 Menu {
                                     ForEach(CountryData.all.sorted(by: { $0.name < $1.name })) { c in
                                         Button(action: { selectedCountry = c }) {
@@ -306,7 +313,9 @@ struct ReservationView: View {
                     // Send-Bar mit Button (weiß wie im Mock)
                     HStack {
                         Button {
-                            print("Send reservation: \(guests) guests | \(date) | \(selectedCountry.dialCode) \(phone) | \(email) | kidChair: \(needsKidChair) | note: \(comment)")
+                            withAnimation {
+                                showSuccess = true
+                            }
                         } label: {
                             HStack(spacing: 8) {
                                 Image(systemName: "paperplane.fill")
@@ -316,7 +325,7 @@ struct ReservationView: View {
                             .foregroundColor(.white)
                             .padding(.vertical, 12)
                             .padding(.horizontal, 18)
-                            .background(Color.gray.opacity(isFormValid ? 0.5 : 0.22), in: Capsule())
+                            .background(isFormValid ? Color.black : Color.gray.opacity(0.22), in: Capsule())
                         }
                         .disabled(!isFormValid)
 
@@ -454,3 +463,44 @@ enum CountryData {
     ]
     static let `default`: Country = all.first(where: { $0.iso2 == "DE" }) ?? all[0]
 }
+
+struct SuccessView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(red: 30/255, green: 30/255, blue: 30/255),
+                    Color(red: 80/255, green: 80/255, blue: 80/255)
+                ],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                
+                Image(systemName: "checkmark")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .foregroundColor(.white)
+                
+                Text("Success!")
+                    .font(.title.bold())
+                    .foregroundColor(.white)
+                    .padding(.top, 8)
+                
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+#Preview {
+    SuccessView()
+}
+
