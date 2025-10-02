@@ -122,6 +122,8 @@ struct ReservationView: View {
     @State private var date = Date()
     @State private var phone = ""
     @State private var email = ""
+    @State private var firstName = ""
+    @State private var lastName = ""
     @State private var selectedCountry = CountryData.default
     @State private var comment = ""
     @State private var showSuccess = false
@@ -250,6 +252,18 @@ struct ReservationView: View {
                             .font(.subheadline.weight(.semibold))
                             .foregroundColor(.white.opacity(0.9))
                         VStack(spacing: 8) {
+                            TextField("First name", text: $firstName)
+                                .textContentType(.givenName)
+                                .autocapitalization(.words)
+                                .padding(12)
+                                .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
+
+                            TextField("Last name", text: $lastName)
+                                .textContentType(.familyName)
+                                .autocapitalization(.words)
+                                .padding(12)
+                                .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
+
                             HStack(spacing: 6) {
                                 Menu {
                                     ForEach(CountryData.all.sorted(by: { $0.name < $1.name })) { c in
@@ -266,9 +280,6 @@ struct ReservationView: View {
                                             .font(.footnote)
                                             .opacity(0.6)
                                     }
-                                    .padding(.vertical, 8)
-                                    .padding(.horizontal, 10)
-                                    .background(Color.white, in: Capsule())
                                 }
 
                                 Divider()
@@ -302,12 +313,8 @@ struct ReservationView: View {
 
                         TextEditor(text: $comment)
                             .frame(minHeight: 110)
-                            .padding(10)
-                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(.white.opacity(0.18), lineWidth: 1)
-                            )
+                            .padding(12)
+                            .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
                     }
                     .padding(.horizontal)
 
