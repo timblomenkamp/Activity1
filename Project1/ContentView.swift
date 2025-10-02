@@ -224,15 +224,21 @@ struct ReservationView: View {
                             .padding(.horizontal)
 
                         HStack(spacing: 12) {
-                            DatePicker("", selection: $date, displayedComponents: [.date])
-                                .labelsHidden()
-                                .padding(.horizontal, 12).padding(.vertical, 6)
-                                .background(Color.white.opacity(0.9), in: Capsule())
+                            HStack {
+                                DatePicker("", selection: $date, displayedComponents: [.date])
+                                    .labelsHidden()
+                            }
+                            .padding(.horizontal, 0)
+                            .padding(.vertical, 0)
+                            .background(Color.white, in: Capsule())
 
-                            DatePicker("", selection: $date, displayedComponents: [.hourAndMinute])
-                                .labelsHidden()
-                                .padding(.horizontal, 12).padding(.vertical, 6)
-                                .background(Color.white.opacity(0.9), in: Capsule())
+                            HStack {
+                                DatePicker("", selection: $date, displayedComponents: [.hourAndMinute])
+                                    .labelsHidden()
+                            }
+                            .padding(.horizontal, 0)
+                            .padding(.vertical, 0)
+                            .background(Color.white, in: Capsule())
 
                             Spacer(minLength: 0)
                         }
