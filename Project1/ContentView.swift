@@ -12,16 +12,9 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Grey-white background
-                LinearGradient(
-                    colors: [ //gradient
-                        Color(red: 30/255, green: 30/255, blue: 30/255),
-                        Color(red: 80/255, green: 80/255, blue: 80/255)
-                    ],
-                    startPoint: .topLeading, endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
-                
+                Image("fineDining")
+                    .resizable()
+                    .ignoresSafeArea()
                 VStack {
                     // Krone in Silber/Grau
                     Image(systemName: "crown.fill")
