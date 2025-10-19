@@ -141,13 +141,16 @@ struct ReservationView: View {
                     .transition(.opacity)
                     .zIndex(1)
             }
+            Image("fineDining")
+                .resizable()
+                .ignoresSafeArea()
 
             // Ganz vorne: Inhalt
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
 
                     // Titel (Restaurantname)
-                    Text("Restaurant")
+                    Text("MiCasa")
                         .font(.largeTitle.bold())
                         .foregroundColor(.white)
                         .shadow(radius: 6)
