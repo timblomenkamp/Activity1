@@ -16,21 +16,13 @@ struct ContentView: View {
                     .resizable()
                     .ignoresSafeArea()
                 VStack {
-                    // Krone in Silber/Grau
-                    Image(systemName: "crown.fill")
+                    // Logo-Bild
+                    Image("micasalogo")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 140, height: 140)
-                        .padding(30)
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [
-                                    Color.white,
-                                    Color.gray.opacity(0.7)
-                                ],
-                                startPoint: .topLeading, endPoint: .bottomTrailing
-                            )
-                        )
+                        .frame(width: 400, height: 250)
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 8)
                         .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 6)
                     
                     // Titel
@@ -149,12 +141,18 @@ struct ReservationView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
 
-                    // Titel (Restaurantname)
-                    Text("MiCasa")
-                        .font(.largeTitle.bold())
-                        .foregroundColor(.white)
-                        .shadow(radius: 6)
-                        .padding(.horizontal)
+                    // Logo oben mittig
+                    HStack {
+                        Spacer()
+                        Image("micasalogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 280, height: 150)
+                            .shadow(color: .black.opacity(0.4), radius: 8, y: 2)
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 8)
 
                     // Gäste + Kid Chair – Card (GLAS)
                     VStack(spacing: 12) {
@@ -335,7 +333,7 @@ struct ReservationView: View {
                             .foregroundColor(.white)
                             .padding(.vertical, 12)
                             .padding(.horizontal, 18)
-                            .background(isFormValid ? Color.black : Color.gray.opacity(0.22), in: Capsule())
+                            .background(isFormValid ? Color.black : Color.gray.opacity(0.5), in: Capsule())
                         }
                         .disabled(!isFormValid)
 
